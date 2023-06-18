@@ -15,7 +15,7 @@ void loop() {
 	delayMicroseconds(10);
 	digitalWrite(trigPin, LOW);
 	duration = pulseIn(echoPin, HIGH);
-	distance = ((float(340 * duration) / 1000) / 2;
+	distance = ((float)(340 * duration) / 1000) / 2;
 
 	Serial.print("distance: ");
 	Serial.print(distance);
