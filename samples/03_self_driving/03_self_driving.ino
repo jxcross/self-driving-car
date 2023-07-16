@@ -1,13 +1,6 @@
 /* 이 소스는 에듀이노(Eduino)에 의해서 번역, 수정, 작성되었고 소유권 또한 에듀이노의 것입니다.
     소유권자의 허락을 받지 않고 무단으로 수정, 삭제하여 배포할 시 법적인 처벌을 받을 수도 있습니다.
-
-    에듀이노 교육용 2휠 아두이노 스마트카 구동예제
-    - 초음파센서를 활용한 스마트카 자율주행-
-
-    초음파 센서로 거리를 감지하여 전방에 장애물이 인식되면, 좌우로 회피하여
-    자율주행이 가능한 소스입니다.
-    방향은 Random() 함수를 이용해 무작위로 선정됩니다.
-
+  Copyright belongs to Eduino
 */
 
 #include <SoftwareSerial.h>
@@ -15,10 +8,10 @@
 AF_DCMotor motor_L(1);
 AF_DCMotor motor_R(4);
 
-int Lspeed = 170;        //좌측 모터 속도
-int Rspeed = 200;        //우측 모터 속도
+int Lspeed = 170;        
+int Rspeed = 200;        
 
-int TrigPin = A0;        //초음파센서 출력핀(trig)과 입력핀(echo), 변수, 함수 선언
+int TrigPin = A0;       
 int EchoPin = A1;
 long duration, distance;
 
@@ -31,15 +24,15 @@ void Left();
 void Stop();
 
 void setup() {
-  Serial.begin(9600);                         // PC와의 시리얼 통신속도
+  Serial.begin(9600);                         
   Serial.println("Eduino Smart Car Start!");
 
-  pinMode(EchoPin, INPUT);                    // EchoPin 입력
-  pinMode(TrigPin, OUTPUT);                   // TrigPin 출력
+  pinMode(EchoPin, INPUT);                    
+  pinMode(TrigPin, OUTPUT);                   
 
-  motor_L.setSpeed(Lspeed);                   // 왼쪽 모터의 속도
+  motor_L.setSpeed(Lspeed);                  
   motor_L.run(RELEASE);
-  motor_R.setSpeed(Rspeed);                   // 오른쪽 모터의 속도
+  motor_R.setSpeed(Rspeed);                  
   motor_R.run(RELEASE);
 }
 
@@ -49,7 +42,6 @@ void loop() {
   Obstacle_Check();
 }
 
-///////////장애물 확인 및 회피 방향 결정///////////
 void Obstacle_Check() {
   int val = random(2);
   Distance_Measurement();
@@ -81,19 +73,17 @@ void Obstacle_Check() {
   }
 }
 
-////////거리감지///////////
 void Distance_Measurement() {
   digitalWrite(TrigPin, LOW);
   delay(2);
-  digitalWrite(TrigPin, HIGH);       // trigPin에서 초음파 발생(echoPin도 HIGH)
+  digitalWrite(TrigPin, HIGH);       
   delayMicroseconds(10);
   digitalWrite(TrigPin, LOW);
-  duration = pulseIn(EchoPin, HIGH); // echoPin 이 HIGH를 유지한 시간을 저장 한다.
+  duration = pulseIn(EchoPin, HIGH); 
   distance = ((float)(340 * duration) / 1000) / 2;
   delay(50);
 }
 
-///////////모터 제어 함수////////////
 void Forward() {
   motor_L.run(FORWARD);  motor_R.run(FORWARD);
   motor_L.setSpeed(Lspeed);  motor_R.setSpeed(Rspeed);
